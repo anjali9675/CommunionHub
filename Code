@@ -1,0 +1,129 @@
+#Dataset
+// src/data/events.js
+const eventsData = [
+  {
+    title: "Community Prayer Gathering",
+    date: "2025-03-15",
+    location: "City Park",
+    description: "Join us for a community prayer gathering to connect and reflect.",
+    category: "Religious",
+  },
+  {
+    title: "Charity Bake Sale",
+    date: "2025-03-20",
+    location: "Community Center",
+    description: "Help us raise funds for local charities by buying delicious baked goods.",
+    category: "Charity",
+  },
+  {
+    title: "Social Meetup: Game Night",
+    date: "2025-03-25",
+    location: "Local Cafe",
+    description: "Come join us for a fun game night with friends and family.",
+    category: "Social",
+  },
+  {
+    title: "Volunteer Day at the Shelter",
+    date: "2025-04-01",
+    location: "Animal Shelter",
+    description: "Spend a day volunteering at the local animal shelter.",
+    category: "Charity",
+  },
+  {
+    title: "Interfaith Dialogue",
+    date: "2025-04-05",
+    location: "Community Hall",
+    description: "Engage in meaningful conversations with people of different faiths.",
+    category: "Religious",
+  },
+];
+
+export default eventsData;
+#EventListingPage.js
+// src/pages/EventListingPage.js
+import React, { useState } from 'react';
+import EventList from '../components/EventList';
+import EventForm from '../components/EventForm';
+import eventsData from '../data/events'; // Import the dataset
+
+const EventListingPage = () => {
+  const [events, setEvents] = useState(eventsData); // Initialize with the dataset
+  const [filter, setFilter] = useState('');
+
+  const addEvent = (event) => {
+    setEvents([...events, event]);
+  };
+
+  const filteredEvents = events.filter(event => 
+    event.category.includes(filter)
+  );
+
+  return (
+    <div>
+      <h2>Event Listing</h2>
+      <label>
+        Filter by Category:
+        <select onChange={(e) => setFilter(e.target.value)}>
+          <option value="">All</option>
+          <option value="Religious">Religious</option>
+          <option value="Social">Social</option>
+          <option value="Charity">Charity</option>
+        </select>
+      </label>
+      <EventForm addEvent={addEvent} />
+      <EventList events={filteredEvents} />
+    </div>
+  );
+};
+
+export default EventListingPage;
+#EventForm.js
+// src/components/EventForm.js
+import React, { useState } from 'react';
+
+const EventForm = ({ addEvent }) => {
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (title && date && location && description && category) {
+      addEvent({ title, date, location, description, category });
+      setTitle('');
+      setDate('');
+      setLocation('');
+      setDescription('');
+      setCategory('');
+    } else {
+      alert("Please fill in all fields.");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        placeholder="Event Title" 
+        value={title} 
+        onChange={(e) => setTitle(e.target.value)} 
+        required 
+      />
+      <input 
+        type="date" 
+        value={date} 
+        onChange={(e) => setDate(e.target.value)} 
+        required 
+      />
+      <input 
+        type="text" 
+        placeholder="Location" 
+        value={location} 
+        onChange={(e) => setLocation(e.target.value)} 
+        required 
+      />
+      <textarea 
+        placeholder="Description" 
+        value
