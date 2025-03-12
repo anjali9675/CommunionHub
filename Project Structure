@@ -1,0 +1,14 @@
+/communion-hub
+|-- /public
+|   |-- index.html
+|-- /src
+|   |-- /components
+|   |   |-- Header.js
+|   |   |-- EventList.js
+|   |   |-- EventForm.js
+|   |-- /pages
+|   |   |-- HomePage.js
+|   |   |-- EventListingPage.js
+|   |-- App.js
+|   |-- index.js
+|-- package.json
